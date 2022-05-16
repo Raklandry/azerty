@@ -1,0 +1,207 @@
+
+.d-block {
+    display: block !important;
+    top: 13px !important;
+    position: absolute !important;
+    left: 0 !important;
+}
+input:focus{
+	outline: none !important;
+	background: none !important;
+	box-shadow: none !important;
+}
+.login{
+	position: relative;
+	width: 100%;
+	height: 100%;
+	background: var(--bg);
+	overflow: hidden;
+}
+.login:before {
+    content: "";
+    position: absolute;
+    width: 1000px;
+    height: 1000px;
+    border-radius: 50%;
+    background: var(--bg3);
+    top: -20%;
+    left: 700px;
+    z-index: 1;
+}
+
+.div-input{
+	display: flex;
+	 justify-content: center;
+	 align-items: center;
+	 flex-direction: column;
+}
+.form-container{
+	width: 100%;
+	height: 100%;
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	grid-gap: 2rem;
+	padding: 40px 2rem;
+}
+.right-panel img{
+	width: 300px;
+}
+
+ form{
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ flex-direction: column;
+}
+
+.title{
+	font-size: 2.2rem;
+	margin-bottom: 3rem;
+}
+.register-input{
+	position: relative;
+	width: 360px;
+	display: grid;
+	grid-template-columns: 15% 85%;
+	margin: 25px; 
+	padding: 5px;
+	border-bottom: 2px solid var(--bg2);
+	z-index: 2;
+}
+.register-input:after, .register-input:before{
+	content: "";
+	position: absolute;
+	bottom: -2px;
+	width: 0;
+	height: 2px;
+	background-color: white;
+	transition: .3s ease;
+}
+.register-input.focus:after, .register-input.focus:before{
+	width: 50%;
+}
+.register-input:after{
+	right: 50%;
+}
+.register-input:before{
+	left: 50%;
+}
+
+.register-input.mail{
+	margin-top: 0;
+}
+.register-input.pass{
+	margin-bottom: 4px;
+}
+.icon{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.icon i{
+	color: var(--bg2);
+	transition: .3s ease;
+}
+.register-input.focus .icon i{
+	color: white;
+}
+.register-input > div{
+	position: relative;
+	height: 45px;
+}
+.register-input > div h5{
+	position: absolute;
+	left: 10px;
+	top: 30%;
+	transform: translateY(-50%);
+	color: var(--bg2);
+	font-size: 18px;
+	transition: .3s ease;
+}
+.register-input.focus > div h5{
+	top: -15px;
+	color: white;
+}
+.register-input > div input{
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	outline: none;
+	background: transparent;
+	border: none;
+	padding: 0.5rem;
+	font-size: 1.2rem;
+	color: white !important;
+}
+
+
+.btn-singUp{
+	width: 300px;
+	background:  transparent;
+	margin: 0;
+	border: 2px solid var(--bg);
+	color: var(--bg);
+}
+.btn-singUp:hover{
+	background: var(--bg);
+	border-color: #fff;
+	color: #fff;
+}
+.right-panel{
+	/*padding: 3rem 17% 2rem 12%;*/
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	grid-gap: 3rem;
+	z-index: 2;
+}
+.panel h3{
+	font-weight: 600;
+	line-height: 1;
+	font-size: 1.5rem;
+	color: white;
+	padding-bottom: 1rem;
+}
+.panel p{
+	font-size: .95rem;
+	padding: 0.7rem;
+	color: var(--bg);
+}
+
+.panel-content{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	text-align: center;
+}
+.singUp{
+	z-index: 2;
+}
+
+.condition{
+    margin-top: 2rem;
+    display: flex;
+}
+
+.condition input{
+    margin-left: 1rem;
+}
+
+.div-input ul{
+    position: absolute;
+    top: -2px;
+    right: -180px;
+    border: 2px solid rgba(255, 0, 0, 0.384);
+    padding: .5rem;
+}
+.register-input.pass ul{
+    position: absolute;
+    top: -2px;
+    right: -240px;
+    border: 2px solid rgba(255, 0, 0, 0.384);
+    padding: .5rem;
+}

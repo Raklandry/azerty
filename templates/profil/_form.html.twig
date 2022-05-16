@@ -1,0 +1,45 @@
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('assets/css/Sheets/newProfil.css') }}">
+{% endblock %}
+{{ form_start(form) }}
+
+    <div class="form-container">
+        <div class="singUp">
+            {{ form_start(form) }}
+                
+                <div class="register-input mail">
+                    <div class="icon">
+                        <i class="fa fa-edit"></i>
+                    </div>
+                    <div class="div-input">
+                        <h5>A quoi pensez-vous ?</h5>
+                        {{ form_row(form.legende) }}
+                    </div>
+                </div>
+
+                <div class="register-img">
+                    <div class="icon">
+                        <i class="fa fa-image text-white"></i>
+                    </div>
+                    <div class="div-input">
+                        {{ form_row(form.photos) }}
+                    </div>
+                </div>
+
+    <button class="btn btn-outline-success btn-block">{{ button_label|default('Ajouter') }}</button>
+{{ form_end(form) }}
+        </div>
+        <div class="panel right-panel">
+            <div class="panel-content">
+                <h3>Ajouter un ou plusieur articles</h3>
+            </div>
+
+            <img src="{{ asset('assets/images/logo.png') }}" alt="Logo E-Sera"/>
+        </div>
+        
+    </div>
+</section>
+{{ form_end(form) }}
+{% block javascripts %}
+    <script src="{{ asset('assets/js/main/Register.js') }}"></script>
+{% endblock %}

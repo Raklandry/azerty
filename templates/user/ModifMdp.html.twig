@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modification du profil{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('assets/css/Sheets/modifProfil.css') }}">
+{% endblock %}
+
+{% block body %}
+  
+<section class="login">
+    <div class="form-container">
+        <div class="singUp">
+            <form method="POST">
+                {% for message in app.flashes('error') %}
+            
+                    <div class="alert alert-danger alert-dismissible fade show">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <strong>{{ message }}</strong>
+                    </div>
+
+                {% endfor %}
+                <h2 class="title">Modification</h2>
+                <div class="register-input mail">
+                    <div class="icon">
+                        <i class="fa fa-lock"></i>
+                    </div>
+                    <div class="div-input">
+                        <h5>Nouveau mot de passe</h5>
+                        <input type="password" id="pass" name="pass" class="input form-control">
+                    </div>
+                </div>
+                <div class="register-input mail">
+                    <div class="icon">
+                        <i class="fa fa-lock"></i>
+                    </div>
+                    <div class="div-input">
+                        <h5>Confirmer le mot de passe</h5>
+                        <input type="password" id="pass2" name="pass2" class="input form-control">
+                    </div>
+                </div>
+
+                <button class="btn btn-outline-success btn-block">Valider</button>
+            </form>
+        </div>
+        <div class="panel right-panel">
+            <div class="panel-content">
+                <h3>Mis à jour d'authentification de {{ app.user.Nom}}</h3>
+                <a href="{{ path('user') }}" class="btn btn-singUp">Annuler</a>
+            </div>
+
+            <img src="{{ asset('assets/images/logo.png') }}" alt="Logo E-Sera"/>
+        </div>
+        
+    </div>
+</section>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('assets/js/main/mdp.js') }}"></script>
+{% endblock %}

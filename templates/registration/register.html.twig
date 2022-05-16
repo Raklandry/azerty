@@ -1,0 +1,112 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('assets/css/Sheets/register.css') }}">
+{% endblock %}
+
+{% block body %}
+  
+<section class="login">
+    <div class="form-container">
+        <div class="singUp">
+            {{ form_start(registrationForm) }}
+                <h2 class="title">Bienvenue</h2>
+
+                <div class="register-input mail">
+                    <div class="icon">
+                        <i class="fa fa-user"></i>
+                    </div>
+                    <div class="div-input">
+                        <h5>Nom</h5>
+                        {{ form_row(registrationForm.nom) }}
+                    </div>
+                </div>
+
+                <div class="register-input mail">
+                    <div class="icon">
+                        <i class="fa fa-envelope"></i>
+                    </div>
+                    <div class="div-input">
+                        <h5>e-mail</h5>
+                        {{ form_row(registrationForm.email) }}
+                    </div>
+                </div>
+
+                <div class="register-input mail">
+                    <div class="icon">
+                        <i class="fa fa-location-dot"></i>
+                    </div>
+                    <div class="div-input">
+                        <h5>Adresse</h5>
+                        {{ form_row(registrationForm.Adresse) }}
+                    </div>
+                </div>
+
+                <div class="register-input mail">
+                    <div class="icon">
+                        <i class="fa fa-phone"></i>
+                    </div>
+                    <div class="div-input">
+                        <h5>Numéro téléphone</h5>
+                        {{ form_row(registrationForm.Tel) }}
+                    </div>
+                </div>
+
+                <div class="register-input mail">
+                    <div class="icon">
+                        <i class="fa fa-id-card"></i>
+                    </div>
+                    <div class="div-input">
+                        <h5>CIN</h5>
+                        {{ form_row(registrationForm.Cin) }}
+                    </div>
+                </div>
+
+                <div class="register-input pass">
+                    <div class="icon">
+                        <i class="fa fa-lock"></i>
+                    </div>
+                    <div class="div-input">
+                        <h5>Mot de passe</h5>
+                        {{ form_row(registrationForm.plainPassword.first) }}
+                    </div>
+                </div>
+
+                <div class="register-input pass">
+                    <div class="icon">
+                        <i class="fa fa-lock"></i>
+                    </div>
+                    <div class="div-input">
+                        <h5>Confirmer votre mot de passe</h5>
+                        {{ form_row(registrationForm.plainPassword.second) }}
+                    </div>
+                </div>
+                <div class="condition">
+                    <p>vous acceptez nos condition générales</p>
+                    {{ form_row(registrationForm.agreeTerms) }}
+                </div>
+                <button class="btn btn-outline-success btn-block mv-5" type="submit">S'inscrire</button>
+            {{ form_end(registrationForm) }}
+        </div>
+        <div class="panel right-panel">
+            <div class="panel-content">
+                <h3>Authentification</h3>
+                <p>Authentifiez-vous pour bien profiter des privilèges qu’un visiteur normal</p>
+                <a href="{{ path('app_login') }}" class="btn btn-primary">Connexion</a>
+                <a href="{{ path('index') }}" class="btn btn-secondary">
+                <i class="icon-nav fa fa-house-chimney-window"></i> Page d'accueil
+                </a>
+            </div>
+
+            <img src="{{ asset('assets/images/logo.png') }}" alt="Logo E-Sera"/>
+        </div>
+        
+    </div>
+</section>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('assets/js/main/Register.js') }}"></script>
+{% endblock %}

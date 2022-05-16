@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouveau Produit{% endblock %}
+
+{% block stylesheets %}
+<style>
+.sticky-top {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 80px;
+    margin-left: 21px;
+    z-index: 1;
+}
+</style>
+{% endblock %}
+{% block body %}
+<div class="sticky-top annuler" style="padding-top: 20px">
+    <button type="button" class="btn btn-outline-secondary">
+    <a href="{{ path("user")}}" class="text-white">
+        <i class="fa fa-reply" ></i> Retour
+    </a>
+    </button>
+</div>
+<div class="container pt-xl-5">
+    <h1 class="text-center">Ajouter un nouveau produit</h1>
+    {{ include('produits/_form.html.twig') }}
+</div>
+{% endblock %}
+
+

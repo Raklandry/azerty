@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contact{% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ asset('assets/css/Sheets/contact.css') }}">
+{% endblock %}
+
+{% block body %}
+<section class="contacts">
+	<div class="container contacts-container">
+		<aside class="contact-aside">
+			<div class="aside-image">
+				<img src="./image/logo-Esera.png" alt="">
+			</div>
+			<h2 class="text-center mb-5">Commentaire</h2>
+            {% if commentes|length == 0 %}
+                    <div>
+                        <strong><i class="fa fa-user text-succes"></i> Admin</strong>
+                    
+                        <p class="coms">
+                            <i class="fa fa-comment"></i>
+                            Votre commentaire s'affichera ici...
+                        </p>
+                    </div>
+            {% else %}
+                {% for commentaire in commentes %}
+                    
+                        <div class="coms">
+                            </strong>
+                                <a href="{{ path('admin_show', {'id': commentaire.user.id}) }}">
+                                    <i class="fa fa-user text-success"></i> {{ commentaire.user.email }}
+                                </a>
+                            <strong> 
+                        
+                            <div class="msg">
+                                <i class="fa fa-comment"></i> <pre>{{ commentaire.content }}</pre>
+                            </div>
+                        </div>
+                {% endfor %}
+            {% endif %}
+
+		</aside>
+
+		<div class="singIn">
+            {{ form_start(form)}}
+					<h2 class="title"><i class="fa fa-user"></i> {{app.user.nom}}</h2>
+					<div class="login-message">
+						<div class="icon">
+							<i class="fa fa-comment"></i>
+						</div>
+						<div class="">
+							<h5>Votre Message ou commentaire</h5>
+                            {{ form_row(form.content)}}
+						</div>
+					</div>
+					<button class="btn btn-primary" type="submit">Envoyer</button>
+            {{ form_end(form)}}
+			</div>
+		</div>
+	</div>
+</section>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('assets/js/main/Contact.js') }}"></script>
+{% endblock %}

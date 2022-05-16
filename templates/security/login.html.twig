@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Log in!{% endblock %}
+
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('assets/Css/Sheets/login.css') }}">
+{% endblock %}
+
+{% block body %}
+
+<section class="login">
+		<div class="form-container">
+			<div class="panel left-panel">
+				<div class="panel-content">
+					<a href="{{ path('index') }}" class="btn btn-secondary">
+					<i class="icon-nav fa fa-house-chimney-window"></i> Page d'accueil
+					</a>
+					<h3>Rejoignez E-Sera</h3>
+					<p>Nous allons vous aider à créer un compte en quelques étape simple</p>
+					<a href="{{ path('app_register') }}" class="btn btn-singUp">Créer un compte</a>
+				</div>
+
+				<img src="{{ asset('assets/images/logo.png') }}" alt="Logo E-Sera"/>
+			</div>
+			<div class="singIn">
+				<form method="post" class="login-form">
+                {% if error %}
+                    <div class="alert alert-danger alert-dismissible fade show">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <strong>Veuillez réessayer !</strong>
+                        <p>E-mail ou Mot de passe incorrect</p>
+                    </div>
+                {% endif %}
+					<h2 class="title">Bienvenue</h2>
+					<div class="login-input mail">
+						<div class="icon">
+							<i class="fa fa-user"></i>
+						</div>
+						<div class="div-input">
+							<h5>Adresse e-mail</h5>
+                            <input type="email" name="email" id="inputEmail" class="input form-control" autocomplete="email" required>
+						</div>
+					</div>
+					<div class="login-input pass">
+						<div class="icon">
+							<i class="fa fa-lock"></i>
+						</div>
+						<div class="div-input">
+							<h5>Mot de passe</h5>
+                            <input type="password" name="password" id="inputPassword" class="input form-control" required>
+						</div>
+					</div>
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+					<button class="btn btn-primary" type="submit">Connexion</button>
+				</form>
+			</div>
+		</div>
+	</section>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('assets/js/main/login.js') }}"></script>
+{% endblock %}

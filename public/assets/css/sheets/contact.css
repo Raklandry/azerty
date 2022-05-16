@@ -1,0 +1,317 @@
+.contacts-container{
+	background: var(--bg1);
+	padding: 4rem;
+	display: flex;
+    align-items: start;
+	margin: 7rem auto;
+	border-radius: 1rem;
+}
+.coms a,i{
+	font-size: 20px;
+}
+
+/*====== aside =======*/
+
+.contact-aside {
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	background: var(--bg2);
+	padding: 3rem;
+	border-radius: 1rem;
+	position: relative;
+	box-shadow: .5rem .5rem 2rem rgba(0, 0, 0, 0.3);
+}
+.contact-aside ul li a{
+	text-align: center;
+}
+.aside-image{
+	width: 100%;
+	margin-bottom: 2rem;
+}
+.contact-aside h2 {
+	text-align: left;
+	margin-bottom: 1rem;
+	font-size: 30px;
+}
+.contact-aside p {
+	font-size: 0.9rem;
+	margin-bottom: 2rem;
+}
+.contact-aside .msg {
+	display: flex;
+    gap: 5px;
+}
+.contact-details li{
+	display: flex;
+	gap: 1rem;
+	align-items: center;
+	margin-bottom: 1rem;
+}
+
+.coms{
+	border-bottom: 1px solid;
+	margin-bottom: 10px;
+}
+.coms pre{
+	border: 1px solid;
+	background-color: #007BFF;
+	border-top-right-radius: 1rem;
+	border-bottom-right-radius: 1rem;
+	border-bottom-left-radius: 1rem;
+	padding: 10px;
+	color: white;
+	font-size: 15px;
+}
+
+/*==== form ===*/
+
+.contact-form{
+	display: flex;
+	flex-direction: column;
+	gap: 1.2rem;
+	margin-right: 4rem;
+}
+.form-name{
+	display: flex;
+	gap: 1.2rem;
+}
+.contact-form input[type="text"]{
+	width: 50%;
+}
+input, textarea{
+	width: 100%;
+	padding: 1rem;
+	background: var(--bg);
+	color: var(--white);
+}
+.contact-form .btn{
+	cursor: pointer;
+	margin-top: 1rem;
+}
+
+.login{
+	position: relative;
+	width: 100%;
+	height: 100vh;
+	background: var(--bg);
+	overflow: hidden;
+}
+.login:before {
+    content: "";
+    position: absolute;
+    width: 1000px;
+    height: 1000px;
+    border-radius: 50%;
+    background: var(--bg2);
+    top: -20%;
+    left: -303px;
+    z-index: 1;
+}
+
+.div-input{
+	display: flex;
+	 justify-content: center;
+	 align-items: center;
+	 flex-direction: column;
+}
+.form-container{
+	width: 100%;
+	height: 100vh;
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	grid-gap: 2rem;
+	padding: 0 2rem;
+}
+.left-panel img{
+	width: 300px;
+}
+
+ form{
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ flex-direction: column;
+}
+	
+.title{
+	font-size: 2.2rem;
+	margin-bottom: 1rem;
+}
+.login-input{
+	position: relative;
+	width: 360px;
+	display: grid;
+	grid-template-columns: 7% 93%;
+	margin: 25px; 
+	padding: 5px;
+	border-bottom: 2px solid var(--bg2);
+}
+.login-message{
+	position: relative;
+	width: 360px;
+	display: grid;
+	grid-template-columns: 7% 93%;
+	margin: 25px;
+	margin-bottom: 75px; 
+	padding: 5px;
+}
+.login-input:after, .login-input:before{
+	content: "";
+	position: absolute;
+	bottom: -2px;
+	width: 0;
+	height: 2px;
+	background-color: white;
+	transition: .3s ease;
+}
+.login-input.focus:after, .login-input.focus:before{
+	width: 50%;
+}
+.login-input:after{
+	right: 50%;
+}
+.login-input:before{
+	left: 50%;
+}
+
+.login-input.mail{
+	margin-top: 0;
+}
+.login-input.pass{
+	margin-bottom: 4px;
+}
+.icon{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.icon i{
+	color: var(--bg2);
+	transition: .3s ease;
+}
+.login-input.focus .icon i{
+	color: white;
+}
+.login-input > div{
+	position: relative;
+	height: 45px;
+}
+.login-input > div h5{
+	position: absolute;
+	left: 10px;
+	top: 50%;
+	transform: translateY(-50%);
+	color: var(--bg2);
+	font-size: 18px;
+	transition: .3s ease;
+}
+.login-input.focus > div h5{
+	top: -5px;
+	font-size: 15px;
+	color: white;
+}
+.login-input > div input{
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	outline: none;
+	background: transparent;
+	border: none;
+	padding: 0.5rem;
+	font-size: 1.2rem;
+	color: white;
+}
+
+/*.login-input input::placeholder{
+	color: var(--bg2);
+}*/
+
+
+.left-panel{
+	/*padding: 3rem 17% 2rem 12%;*/
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	grid-gap: 3rem;
+	z-index: 2;
+}
+/*.right-panel{
+	padding: 3rem 12% 2rem 17%;
+}*/
+
+.panel h3{
+	font-weight: 600;
+	line-height: 1;
+	font-size: 1.5rem;
+}
+.panel p{
+	font-size: .95rem;
+	padding: 0.7rem;
+}
+
+.panel-content{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	text-align: center;
+}
+.input.message{
+	border: 2px solid var(--bg2);
+	resize: none;
+	height: 100px;
+}
+.login-message > div{
+	position: relative;
+}
+.login-message > div h5{
+	position: absolute;
+	left: 40px;
+	top: 50%;
+	transform: translateY(-50%);
+	color: var(--bg2);
+	font-size: 18px;
+	transition: .3s ease;
+}
+.login-message > div textarea{
+	position: absolute;
+	left: 15px;
+	width: 100%;
+	height: 100%;
+	outline: none;
+	background: transparent;
+	border: none;
+	padding: 0.5rem;
+	font-size: 15px;
+	color: white;
+}
+.login-message.focus > div h5{
+	left: 60px;
+	top: -65%;
+	font-size: 15px;
+	color: white;
+}
+.login-message.focus > div textarea{
+	border-color: white;
+}
+.login-message.focus > .icon i{
+	color: white;
+}
+textarea:focus{
+    box-shadow: none !important;
+    background: transparent !important;
+    color: #fff !important;
+}
+/* .coms{
+    border: 1px solid #fff;
+    border-bottom-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    text-align: justify !;
+    font-size: 50px;
+    padding: 0.5rem;
+} */

@@ -1,0 +1,145 @@
+nav{
+	background: transparent ;
+	width: 100vw;
+	height: 5rem;
+	position: fixed;
+	top: 0;
+	z-index: 11;
+	transition: var(--transition);
+}
+nav h4.logo{
+	font-size: 2rem;
+	font-weight: 700;
+}
+.nav-container{
+	height: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.nav-container a{
+	display: flex;
+	align-items: center;
+}
+.nav-container a img{
+	width: 80px;
+}
+nav button {
+	display: none;
+}
+.nav-menu {
+	display: flex;
+	align-items: center;
+	gap:  4rem;
+}
+.nav-menu.gap{
+	gap:  4rem;
+}
+.nav-menu a{
+	font-size: 0.9rem;
+	transition: var(--transition);
+}
+.nav-menu a:hover,
+.nav-container h4:hover{
+	color: var(--bg3);
+}
+.nav-container a:hover{
+	color: var(--bg3);
+}
+
+.nav-menu a.active{
+	color: var(--bg2);
+	padding:  0.7rem;
+	border-bottom: 1px solid white;
+	border-top: 1px solid white;
+	border-radius: 0.3rem;
+}
+.nav-menu a.active:hover{
+	color: var(--bg3);
+}
+.nav-container button:active{
+	outline: none;
+}
+
+/* =========== media screen ============== */
+@media screen and (max-width: 1020px){
+	
+	.nav-menu{
+		position: fixed;
+		top: 5rem;
+		right: 5%;
+		height: fit-content;
+		width: 18rem;
+		flex-direction: column;
+		display: none;
+	}
+	nav button{
+		display: inline-block;
+		background: transparent;
+		font-size: 1.8rem;
+		color: var(--white);
+		cursor: pointer;
+	}
+	nav button#close-menu{
+		display: none;
+	}
+
+	.nav-container{
+		width: var(--lg);
+	}
+	.nav-menu.gap{
+		gap: 0;
+	}
+	.nav-menu li{
+		width: 100%;
+		height: 5.8rem;
+		animation: animNavItems 400ms linear forwards;
+		transform-origin: top right;
+		opacity: 0;
+	}
+	.nav-menu li:nth-child(2){
+		animation-delay: 200ms;
+	}
+	.nav-menu li:nth-child(3){
+		animation-delay: 400ms;
+	}
+	.nav-menu li:nth-child(4){
+		animation-delay: 600ms;
+	}
+	.nav-menu li:nth-child(5){
+		animation-delay: 800ms;
+	}
+	@keyframes animNavItems {
+		0% {
+			transform: rotateZ(-90deg) rotateX(90deg) scale(0.1);
+		}
+		100%{
+			transform: rotateZ(0) rotateX(0) scale(1);
+			opacity: 1;
+		}
+	}
+	.nav-menu li a {
+		background: var(--bg1);
+		font-weight: bold;
+		box-shadow: -4rem 6rem 10rem rgba(0, 0, 0, .6);
+		width: 100%;
+		height: 100%;
+		display: grid;
+		place-items: center;
+	}
+	.nav-menu li a:hover{
+		background: var(--bg2);
+		color: var(--bg);
+	}
+}
+
+/* ================= navbar Scroll========================= */
+
+.window-scroll{
+	opacity: 0.2;
+}
+.window-scroll:hover{
+	opacity: 1;
+	background: var(--bg);
+	box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2);
+}

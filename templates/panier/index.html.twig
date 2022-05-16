@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Panier{% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ asset('assets/css/sheets/panier.css') }}">
+<style>
+    .title{
+      text-align: center;
+      font-size: 50px;
+      font-weight: 700px;
+    }
+    img{display: inline;}
+    .pTotal{
+      font-size: 20px;
+      font-weight: 700;
+      color: #088178;
+    }
+    .panier{
+      padding-top: 5rem;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<section class="panier">
+  <h2 class="title">Votre Panier <i class="fa fa-shopping-cart"></i></h2>
+ {% if items | length > 0 %} 
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th>Nom du produit</th>
+        <th>Image(s)</th>
+        <th>Prix</th>
+        <th>Quantité</th>
+        <th>Total</th>
+        <th></th>
+      </tr>
+    </thead>
+
+
+{% for item in items %}
+    <tbody>
+      <tr>
+        <td>{{ item.produit.nom }}</td>
+        <td>
+        {% for image in item.produit.produitImages %}
+            <img style="width:100px" src="{{ asset('/uploads/images/' ~ image.nom) }}" alt="Image">
+        {% endfor %}
+        </td>
+        <td>{{ item.produit.prix | number_format(0, ',', ' ')  }} Ar</td>
+        <td>{{ item.quantity }}</td>
+        <td>{{ (item.produit.prix * item.quantity) | number_format(0, ',', ' ')  }} Ar</td>
+        <td>
+            <a href="{{ path('Supprimer_panier', {'id': item.produit.id}) }}" class="btn btn-danger">
+                <i class="fa fa-trash"></i>
+            </a>
+        </td>
+      </tr>
+    </tbody>
+
+  {% endfor %}
+    <tfoot>
+        <tr class="pTotal">
+            <td colspan="4" class="text-right">TOTAL : </td>
+            <td>{{total | number_format(0, ',', ' ') }} Ar</td>
+        </tr>
+    </tfoot>
+  </table>
+
+{% else %}
+
+<h2 class="text-center">Vide !</h2>
+{% endif %}
+</section>
+{% endblock %}

@@ -1,0 +1,239 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Produits index{% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ asset('assets/css/sheets/Produit.css') }}">
+    <style>
+        nav{
+        }
+        footer{
+        }
+        .container-fluid{
+            margin-top: 5rem;
+        }
+        .imageProduit{
+            display: flex;
+            flex-direction: column;
+        }
+        .imageProduit img{
+            width: 100px;
+        }
+        .search-content{
+            height: 100%;
+            overflow-y: scroll;
+        }
+        .search{
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+        .search .btn{
+            padding: 0.2rem;
+            margin: 0;
+            font-size: 20px
+        }
+        .form-check input{
+            font-size:40px !important;
+        }.modal-content{
+            color: black;
+        }
+
+        .searchModal{
+            padding-top: 5rem;
+            z-index: 1;
+        }
+        .date{
+            font-size: 15px;
+            color: gray;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    
+<div class="container-fluid">     
+{# ==================================== #}
+<div class="sticky-top searchModal">
+    <button type="button" class=" btn btn-primary" data-toggle="modal" data-target="#myModal">
+        <i class="fa fa-search"></i> Rechercher et Filtrer
+    </button>
+</div>
+
+<div class="modal" id="myModal">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+      {{ form_start(form) }}
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title"><i class="fa fa-search"></i> Recherche et Filtre</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <!-- Modal body -->
+        <div class="modal-body">
+          <div class="container search">
+                
+
+            {{ form_row(form.q) }}
+        <button type="submit" class="btn btn-primary btn-block"><i class="fa fa-search"></i> Rechercher</button>
+
+                    <h4>Prix</h4>
+                    <div class="row">
+                        <div class="col-md-6">
+                            {{ form_row(form.min) }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form_row(form.max) }}
+                        </div>
+                    </div>
+
+                    {{ form_row(form.promo) }}
+
+                    <h4>Catégories</h4>
+                    {{ form_row(form.category) }}
+
+            </div>
+        </div>
+        
+        <!-- Modal footer -->
+        <div class="modal-footer">
+        <button type="submit" class="btn btn-warning btn-block text-white"><i class=" fa fa-layer-group"></i> Filtrer</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+        {{ form_end(form) }}
+      </div>
+    </div>
+  </div>
+{# ==================================== #}
+
+    <section class="courses">
+    
+    <h1 class="mb-5">LISTES DES ARTICLES</h1>
+	<div class="container courses-container">
+{% for produit in produits %}
+{% for image in produit.produitImages %}
+
+		<article class="course swiper-slide">
+			<div class="course-image">
+				<a href="{% if app.user %}{{ path('produits_show', {'id': produit.id}) }}{% else %}{{ path('app_login') }}{% endif %}">
+					<img src="{{ asset('/uploads/images/' ~ image.nom) }}" alt="Image">
+				</a>
+			</div>
+			<div class="course-info">
+				<div class="info">
+					<span>{{ produit.nom }}</span>
+					<h5>{{ produit.description }}</h5>
+					<div class="star">
+						<i class="fa fa-splotch"></i>
+						<i class="fa fa-splotch"></i>
+						<i class="fa fa-splotch"></i>
+						<i class="fa fa-splotch"></i>
+						<i class="fa fa-splotch"></i>
+					</div>
+					<h4>{{ produit.prix | number_format(0, ',', ' ') }} Ar</h4>
+					<p class="date">{{ produit.createdAt|date }}</p>
+				</div>
+				<div class="option">
+				{% if app.user %}
+					<ul class="menu-items">
+						<li>
+							<a href="{{ path('ajout_panier', {'id': produit.id}) }} ">
+								<i class="fa fa-shopping-cart"></i>
+							</a>
+						</li>
+						<li>
+							<a href="{{ path('produits_show', {'id': produit.id}) }}">
+								<i class="fa fa-search"></i>
+							</a>
+						</li>
+						<li>
+							<a href="courses.html">
+								<i class="fa fa-random"></i>
+							</a>
+						</li>
+						<li>
+							<a href="">
+								<i class="fa fa-warning"></i>
+							</a>
+						</li>
+					</ul>
+					{% else %}
+					<ul class="menu-items">
+						<li>
+							<a href="{{ path('app_login') }} ">
+								<i class="fa fa-shopping-cart"></i>
+							</a>
+						</li>
+						<li>
+							<a href="{{ path('app_login') }}">
+								<i class="fa fa-search"></i>
+							</a>
+						</li>
+						<li>
+							<a href="{{ path('app_login') }}">
+								<i class="fa fa-random"></i>
+							</a>
+						</li>
+						<li>
+							<a href="{{ path('app_login') }}">
+								<i class="fa fa-warning"></i>
+							</a>
+						</li>
+					</ul>
+				{% endif %}
+				</div>
+			</div>
+		</article>
+{% endfor %}
+{% endfor %}
+	</div>								
+</section>
+        {# {% if (produits) %}
+            <a href="{{ path('produits_new') }}">Ajouter nouveau produit</a>
+        {% endif %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Nom</th>
+                    <th>Description</th>
+                    <th>Prix</th>
+                    <th>catégorie</th>
+                    <th>Propriétaire</th>
+                    <th>Images</th>
+                    <th>actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for produit in produits %}
+                <tr>
+                    <td>{{ produit.id }}</td>
+                    <td>{{ produit.nom }}</td>
+                    <td>{{ produit.description }}</td>
+                    <td>{{ produit.prix }}</td>
+                    <td>{{ produit.categories }}</td>
+                    <td>{{ produit.user }}</td>
+                    <td>
+                        {% for image in produit.produitImages %}
+                            <div class="imageProduit">
+                                <img src="{{ asset('/uploads/images/' ~ image.nom) }}" alt="Image" width="100">
+                            </div>
+                        {% endfor %}
+                    </td>
+                    <td>
+                        <a href="{{ path('produits_show', {'id': produit.id}) }}">show</a>
+                        <a href="{{ path('produits_edit', {'id': produit.id}) }}">edit</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <a href="{{ path('produits_new') }}">Ajouter un pruduit</a>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table> #}
+      </div>
+    </div>
+</div>
+    
+{% endblock %}

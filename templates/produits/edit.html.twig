@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Produits{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        .imageProduit img{
+            width: 100px;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+<section class="login">
+    <h1 class="text-center">Modifier</h1>
+
+    {{ include('produits/_form.html.twig', {'button_label': 'Modifier'}) }}
+</section>
+{% endblock %}
+
+{% block javascripts %}
+<script type="text/javascript">
+window.onload = () => {
+        // Gestion des boutons "Supprimer"
+        let links = document.querySelectorAll("[data-delete]")
+
+        // on boucle sur links
+        for(link of links){
+            //on écoute le click
+            link.addEventListener("click", function(e){
+                // on empêche la navigation
+                e.preventDefault()
+
+                // on demande confirmation
+                if(confirm("Voulez-vous vraiment supprimer cette image ?")){
+                    // on envoie une requête Ajax vers le href du lien avec la méthode DELETE
+                    fetch(this.getAttribute("href"), {
+                        method: "DELETE",
+                        headers: {
+                            "X-Requested-With": "XMLHttpRequest",
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({"_token": this.dataset.token})
+                    }).then(
+                        // on récupère la réponse en JSON
+                        response => response.json()
+                    ).then(data => {
+                        if (data.success)
+                            this.parentElement.remove()
+                        else
+                            alert(data.error)
+                    }).catch(e => alert(e))
+                }
+            })
+        }
+    } 
+</script>
+{% endblock %}

@@ -1,0 +1,178 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello MessagesController!{% endblock %}
+
+
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ asset('assets/css/sheets/Messages.css') }}">
+<style>
+.profilPdp{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    position: relative;
+    overflow: hidden;
+}
+.profilPdp img{
+    position: absolute;
+    width: 100%;
+}
+.row .profil{
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+.row .profil .message{
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    margin: 0;
+    width: 400px;
+    overflow: hidden;
+}
+.profil .icon{
+    display: flex;
+    align-items: center;
+}
+.message p{
+    font-size: 20px;
+    margin-top: 0;
+    margin-bottom: 0rem;
+}
+.message div{
+    font-size: 20px;
+    margin-top: 0;
+    margin-bottom: 0rem;
+}
+.message p:nth-child(1){
+   font-weight: bold;
+}
+.message p:nth-child(3){
+    color: gray;
+   font-weight: bold;
+}
+.row{
+    padding: 1rem;
+}
+.icon i{
+    transition: all 0.3s ease;   
+}
+.icon i.fa-envelope{
+    color: #28A745;  
+}
+.icon i:hover{
+    color: #007BFF;
+}
+.modal{
+    color: black;
+}
+</style>
+{% endblock %}
+
+
+{% block body %}
+<section class="message">
+{% for message in app.flashes('message') %}
+        
+            <div class="container">
+                <div class="alert alert-success alert-dismissible fade show">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <strong>{{ message }}</strong>
+                </div>
+            </div>
+
+    {% endfor %}
+<h1 class="text-center">
+Messagerie
+</h1>
+{# <a class="Ajout btn btn-outline-primary" href="{{ path('send') }}"> Envoyer un message</a> #}
+<div class="container-fluid">
+<h2 class="text-center">
+</h2>  
+{% if app.user.received|length > 0%}
+{% for message in app.user.received %}
+
+    <div class="row">
+      <div class="col-sm profil">
+
+        <div class="img">
+        {% if message.sender.profils|length == 0 %}
+                <div class="profilPdp">
+                    <img src="{{ asset('/uploads/profils/default.png') }}" alt="Image" width="100">
+                </div>
+            {% else %}
+            {% for profil in message.sender.profils %}
+                <div class="profilPdp">
+                    <img src="{{ asset('/uploads/profils/' ~ profil.photos[(profil.photos|length -1)].nom) }}" alt="Image">
+                </div>
+            {% endfor %}
+            {% endif %}
+        </div>
+
+        <div class="message ">
+            <p class="">{{message.sender.email}}</p>
+            <div class="">{{message.message}}</div>
+            <p class="">{{message.createdAt|date}}</p>
+        </div>
+        <div class="icon ">
+            <a class="link" href="{{ path('read', {id: message.id}) }}">
+            {% if message.isRead == 0 %}
+                <i class="fa fa-envelope"></i>
+            {% else %}
+                <i class="fa fa-envelope-open-text"></i>
+            {% endif %}
+            </a>
+        </div>
+        <div class="icon ">
+            {{ include('messages/_delete_form.html.twig') }}
+            {# <a href="{{path('delete', {id: message.id}) }}">
+                <i class="fa fa-trash-alt text-danger"></i>
+            </a> #}
+        </div>
+      </div>
+    </div>  
+{% endfor %}
+{% else %}
+<h2 class="text-center">
+Aucun message...
+</h2>
+{% endif %}
+<h2 class="text-center">
+</h2>
+{% for message in app.user.sent %}
+    <div class="row">
+      <div class="col-sm profil">
+
+
+        <div class="message ">
+            <p class="">{{message.sender.email}}</p>
+            <div class="">{{message.message}}</div>
+            <p class="">{{message.createdAt|date}}</p>
+        </div>
+        <a class="link" href="{{ path('read', {id: message.id}) }}">
+        <div class="img">
+        {% if message.sender.profils|length == 0 %}
+                <div class="profilPdp">
+                    <img src="{{ asset('/uploads/profils/default.png') }}" alt="Image" width="100">
+                </div>
+            {% else %}
+            {% for profil in message.sender.profils %}
+                <div class="profilPdp">
+                    <img src="{{ asset('/uploads/profils/' ~ profil.photos[(profil.photos|length -1)].nom) }}" alt="Image">
+                </div>
+            {% endfor %}
+            {% endif %}
+        </div>
+        </a>
+        <div class="icon ">
+            {{ include('messages/_delete_form.html.twig') }}
+            {# <a href="{{path('delete', {id: message.id}) }}">
+                <i class="fa fa-trash-alt text-danger"></i>
+            </a> #}
+        </div>
+      </div>
+    </div>  
+{% endfor %}
+</div>
+</section>
+{% endblock %}

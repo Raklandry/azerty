@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/aos.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/icon.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/swiper-bundle.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/Default.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/w3.css') }}">
+        {# ============== navigation =================== #}
+        <link rel="stylesheet" href="{{ asset('assets/css/sheets/Navbar.css') }}">
+        {# ============== Footer =================== #}
+        <link rel="stylesheet" href="{{ asset('assets/css/sheets/footer.css') }}">
+
+        {% block stylesheets %}
+        {% endblock %}
+
+    </head>
+    <body>
+    {# ============= navigation ======================== #}
+        <nav class"baseNav">
+            <div class="container nav-container">
+                <a href=" {{ path('index') }}">
+                    <img src="{{ asset('assets/images/logo.png') }}" alt="Logo E-Sera"/>
+                    <h4 class="logo">E-Sera</h4>
+                </a>
+                {% if app.user %}
+                <ul class="nav-menu gap">
+                    <li>
+                        <a data-toggle="tooltip" data-placement="bottom" title="Accueil" href=" {{ path('index') }}">
+                            <i class="icon-nav fa fa-house-chimney-window"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a data-toggle="tooltip" data-placement="bottom" title="Membres" href="{{ path('admin_index') }}">
+                            <i class="icon-nav fa fa-street-view text-success"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a data-toggle="tooltip" data-placement="bottom" title="Panier" href="{{ path('panier') }}">
+                            <i class="icon-nav fa fa-bag-shopping text-danger"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a data-toggle="tooltip" data-placement="bottom" title="Contact" href="{{ path('messages') }}">
+                            <i class="icon-nav fa fa-comments text-primary"></i>
+                            {% if app.user.received|length > 0 %}
+                                <span class="badge badge-danger badge-pill" style="font-size:15px">{{ app.user.received|length }}</span>
+                            {% endif %}
+
+                        </a>
+                    </li>
+                    <li>
+                        <a data-toggle="tooltip" data-placement="bottom" title="Shop" href="{{ path('produits_index') }}">
+                            <i class="icon-nav fa fa-dumpster text-warning"></i>
+                        </a>
+                    </li>
+                </ul>
+                
+                    <ul class="nav-menu">
+                        <li>
+                            <a  data-toggle="tooltip" data-placement="bottom" title="Profil" href="{{ path('user') }}">
+                            {% if app.user.profils|length > 0 %}
+                                {% for profil in app.user.profils %}
+                                    <div class="profilPdp">
+                                        <img src="{{ asset('/uploads/profils/' ~ profil.photos[(profil.photos|length -1)].nom) }}" alt="Image">
+                                    </div>
+                                {% endfor %}
+                            {% else %}
+                                <div class="profilPdp">
+                                    <img src="{{ asset('/uploads/profils/default.png') }}" alt="Image">
+                                </div>
+                            {% endif %}
+
+                            </a>
+                        </li>
+                        <li>
+                            <a class="icon" data-toggle="tooltip" data-placement="bottom" title="Se Déconnecter" href="{{ path('app_logout') }}">
+                                <i class="fa fa-door-closed i-logout"></i>
+                                <i class="fa fa-door-open i-login"></i>
+                            </a>
+                        </li>
+                    </ul>
+                {% else %}
+                <ul class="nav-menu gap">
+                    <li>
+                        <a data-toggle="tooltip" data-placement="bottom" title="Accueil" href=" {{ path('index') }}">
+                            <i class="icon-nav fa fa-house-chimney-window"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a data-toggle="tooltip" data-placement="bottom" title="Membres" href="{{ path('app_login') }}">
+                            <i class="icon-nav fa fa-street-view text-success"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a data-toggle="tooltip" data-placement="bottom" title="Panier" href="{{ path('app_login') }}">
+                            <i class="icon-nav fa fa-bag-shopping text-danger"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a data-toggle="tooltip" data-placement="bottom" title="Contact" href="{{ path('app_login') }}">
+                            <i class="icon-nav fa fa-comments text-primary"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a data-toggle="tooltip" data-placement="bottom" title="Shop" href="{{ path('app_login') }}">
+                            <i class="icon-nav fa fa-dumpster text-warning"></i>
+                        </a>
+                    </li>
+                </ul>
+                    <ul class="ul">
+                        <li>
+                            <a class="icon" data-toggle="tooltip" data-placement="bottom" title="Se Connecter" href="{{ path('app_login') }}">
+                                <i class="fa fa-door-closed ilogout"></i>
+                                <i class="fa fa-door-open ilogin"></i>
+                            </a>
+                        </li>
+                    </ul>
+                {% endif %}
+                <button id="open-menu"><i class="fa fa-grip"></i></button>
+                <button id="close-menu"><i class="fa fa-close"></i></button>
+            </div>
+        </nav>
+    {# ================ End navigation ================= #}
+
+
+        {% block body %}{% endblock %}
+
+        
+    {# ================= footer ========================= #}
+    <footer class="baseFooter">
+	<div class="container footer-container">
+		<div class="footer1">
+			<a href="index.html" class="footer-logo"><h4>A propos</h4></a>
+			<p>
+				Conditions générales 
+			</p>
+			<p>
+				Données personnelles 
+			</p>
+			<p>
+				Mentions légales
+			</p>
+			<p>
+				Rappels produits
+			</p>
+		</div>
+		<div class="footer2">
+			<h4>Navigation</h4>
+			<ul class="footerLinks">
+				<li><a href="{{ path('index') }}"><i class="icon-nav fa fa-house-chimney-window"></i> Home</a></li>
+				<li><a href="{{ path('admin_index') }}"><i class="icon-nav fa fa-street-view text-success"></i> Membres</a></li>
+                {% if app.user %}
+				<li><a href="{{ path('panier') }}"><i class="icon-nav fa fa-bag-shopping text-danger"></i> Panier</a></li>
+                {% endif %}
+				<li><a href="{{ path('commente') }}"><i class="icon-nav fa fa-comments text-primary"></i> Contact</a></li>
+				<li><a href="{{ path('produits_index') }}"><i class="icon-nav fa fa-dumpster text-warning"></i> Shop</a></li>
+                
+			</ul>
+		</div>
+		<div class="footer3">
+			<h4>Parametre</h4>
+            {% if app.user %}
+			<ul class="footerLinks">
+				<li><a href="{{ path('user') }}">Profil</a></li>
+				<li><a href="{{ path('produits_index') }}">Sécurity</a></li>
+				<li><a href="{{ path('app_logout') }}">Se déconnecter</a></li>
+			</ul>
+            {% else %}
+			<ul class="footerLinks">
+				<li><a href="{{ path('app_login') }}">Profil</a></li>
+				<li><a href="{{ path('app_login') }}">Sécurity</a></li>
+				<li><a href="{{ path('app_login') }}">Se Connecter</a></li>
+			</ul>
+            {% endif %}
+		</div>
+		<div class="footer4">
+			<h4>Admin Contact</h4>
+			<div class="footerLinks">
+				<p>Admin@mail.com</p>
+				<p>+261 32 64 131 96</p>
+			</div>
+
+			<ul class="footerSocials">
+				<li><a href="#"><!-- <i class="fa fa-facebook"></i>  -->facebook</a></li>
+				<li><a href="#"><!-- <i class="fa fa-facebook"></i>  -->twiter</a></li>
+				<li><a href="#"><!-- <i class="fa fa-facebook"></i>  -->Instagram</a></li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="footer-copyright">
+		<small>Copyright &copy; Landry</small>
+	</div>
+</footer>
+{# ================================= End footer ================================= #}
+
+        <script src="{{ asset('assets/jquery/jquery.min.js') }}"></script>
+        <script src="{{ asset('assets/jquery/popper.min.js') }}"></script>
+        <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('assets/js/anime.js') }}"></script>
+        <script src="{{ asset('assets/js/aos.js') }}"></script>
+        <script src="{{ asset('assets/js/swiper-bundle.min.js') }}"></script>
+        <script src="{{ asset('assets/js/navBar.js') }}"></script>
+        <script>
+        $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();   
+        });
+        </script>
+        {% block javascripts %}
+        {% endblock %}
+    </body>
+</html>

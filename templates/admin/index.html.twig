@@ -1,0 +1,94 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User index{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('assets/css/sheets/User.css') }}">
+{% endblock %}
+
+{% block body %}
+
+<section class="achievements">
+ 	<div class="container achievements-container">
+ 		<div class="achievements-left">
+ 			<img src="{{ asset('assets/images/logo.png') }}" alt="Logo E-Sera"/>
+ 		</div>
+ 		<div class="achievements-right">
+ 			<h1>Achievement</h1>
+
+ 			<p>
+ 				Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+ 				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+ 				quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+ 				consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+ 				cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+ 				proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+ 			</p>
+ 		
+	 		<div class="achievements-cards">
+	 			<article class="achievement-card">
+	 				<span class="achievement-icon">
+	 					<i class="fa fa-bell"></i>
+	 				</span>
+	 					<h3>{{ commentes | length}}</h3>
+	 					<p>Notification</p>
+	 				
+	 			</article>
+
+	 			<article class="achievement-card">
+	 				<span class="achievement-icon">
+	 					<i class="fa fa-street-view"></i>
+	 				</span>
+	 					<h3>{{ users | length}}</h3>
+	 					<p>Membres</p>
+	 				
+	 			</article>
+
+	 			<article class="achievement-card">
+	 				<span class="achievement-icon">
+	 					<i class="fa fa-tags"></i>
+	 				</span>
+	 					<h3>{{ produit | length}}</h3>
+	 					<p>Articles</p>
+	 				
+	 			</article>
+	 		</div>
+	 	</div>
+ 	</div>
+ </section>
+
+ <!-- ============= team ================ -->
+
+ <section class="teams">
+ 	<h2>Listes des Membres</h2>
+ 	<div class="container teams-container">
+     {% for user in users %}
+ 		<article class="team">
+ 			<div class="team-image">
+ 			{% for profil in user.profils %}
+ 			{% if profil.photos %}
+				<img src="{{ asset('/uploads/profils/' ~ profil.photos[(profil.photos|length -1)].nom) }}" alt="Image">
+ 			{% else %}
+ 			    <img src="{{ asset('/uploads/profils/default.png') }}" alt="Image">
+ 			{% endif %}
+
+			{% endfor %}
+ 			</div>
+ 			<div class="team-infos">
+ 				<h4>{{ user.Nom }}</h4>
+ 			</div>
+ 			<div class="team-options">
+ 				<a href="{{ path('admin_show', {'id': user.id}) }}"><i class="fa fa-id-card text-primary"></i></a>
+ 				<a href=""><i class="fa fa-splotch text-warning"></i></a>
+ 				<a href=""><i class="fa fa-warning text-danger"></i></a>
+ 				<a href="{{ path('envoyer', {'id': user.id}) }}"><i class="fa fa-commenting text-success"></i></a>
+ 			</div>
+ 		</article>
+        {% endfor %}
+
+ 	</div>
+ </section>
+
+ {# =========================================================================== #}
+    
+{% endblock %}

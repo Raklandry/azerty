@@ -1,0 +1,9 @@
+.message{
+    padding-top: 5rem;
+}
+.message h1{
+    color: blue;
+    font-size: 50px;
+    font-weight: 700;
+    text-shadow: 2px 2px 2px white;
+}

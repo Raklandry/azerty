@@ -1,0 +1,112 @@
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('assets/css/Sheets/NewProduit.css') }}">
+    <style>
+    .imageProduit{
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+    }
+    .imageContent{
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1rem;
+    }
+    </style>
+
+{% endblock %}
+
+    <div class="form-container">
+        <div class="singUp">
+            {{ form_start(form) }}
+                
+                <div class="register-input mail">
+                    <div class="icon">
+                        <i class="fa fa-edit"></i>
+                    </div>
+                    <div class="div-input">
+                        <h5>Nom du produit</h5>
+                        {{ form_row(form.nom) }}
+                    </div>
+                </div>
+
+                <div class="register-textarea">
+                    <div class="icon">
+                        <i class="fa fa-bar-chart"></i>
+                    </div>
+                    <div class="div-input">
+                        <h5>description</h5>
+                        {{ form_row(form.description) }}
+                    </div>
+                </div>
+
+                <div class="register-input mail">
+                    <div class="icon">
+                        <i class="fa fa-money-bill-wave"></i> 
+                    </div>
+                    <div class="div-input">
+                        <h5>Prix (Ariary)</h5>
+                        {{ form_row(form.prix) }}
+                    </div>
+                </div>
+
+                <div class="register-categorie">
+                    <div class="icon">
+                        <i class="fa fa-timeline text-white"></i>
+                    </div>
+                    <div class="div-input">
+                        {{ form_row(form.categories) }}
+                    </div>
+                </div>
+
+                <div class="register-promo">
+                    <div class="icon">
+                        <i class="fa fa-award text-white"></i>
+                    </div>
+                    <div class="div-input">
+                        <h5>En promotion</h5>
+                        {{ form_row(form.promo) }}
+                    </div>
+                </div>
+                <div class="register-img">
+                    <div class="icon">
+                        <i class="fa fa-image text-white"></i>
+                    </div>
+                    <div class="div-input">
+                        {{ form_row(form.ProduitImage) }}
+                    </div>
+                </div>
+            {{ form_widget(form) }}
+
+    {% if app.request.attributes.get('_route') == 'produits_edit' %}
+        <h2>Images</h2>
+            <div class="imageContent">
+                {% for image in produit.produitImages %}
+                    <div class="imageProduit">
+                        <img src="{{ asset('/uploads/images/' ~ image.nom) }}" alt="Image" width="100">
+                        <a href="{{ path('produit_supprime_image', {'id': image.id}) }}" data-delete data-token="{{ csrf_token('delete' ~ image.id) }}">Supprimer</a>
+                    </div>
+                {% endfor %}
+            </div>
+    {% endif %}
+    
+    <button class="btn btn-outline-success btn-block">{{ button_label|default('Ajouter') }}</button>
+{{ form_end(form) }}
+        </div>
+        <div class="panel right-panel">
+            <div class="panel-content">
+                <h3>Ajouter un ou plusieur articles</h3>
+            </div>
+            <img src="{{ asset('assets/images/logo.png') }}" alt="Logo E-Sera"/>
+            <button type="button" class="btn btn-outline-secondary btn-block">
+                <a href="{{ path("user")}}" class="text-white">
+                    <i class="fa fa-reply" ></i> Annuler
+                </a>
+                </button>
+        </div>
+        
+    </div>
+
+
+{% block javascripts %}
+    <script src="{{ asset('assets/js/main/Register.js') }}"></script>
+{% endblock %}

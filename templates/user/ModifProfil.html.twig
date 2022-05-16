@@ -1,0 +1,88 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modification du profil{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('assets/css/Sheets/modifProfil.css') }}">
+{% endblock %}
+{% block body %}
+<section class="login">
+    <div class="form-container">
+        <div class="singUp">
+            {{ form_start(form) }}
+                <h2 class="title">Modification</h2>
+                
+                <div class="register-input mail">
+                    <div class="icon">
+                        <i class="fa fa-user"></i>
+                    </div>
+                    <div class="div-input">
+                        <h5>Nom</h5>
+                        {{ form_row(form.Nom) }}
+                    </div>
+                </div>
+
+                <div class="register-input mail">
+                    <div class="icon">
+                        <i class="fa fa-envelope"></i>
+                    </div>
+                    <div class="div-input">
+                        <h5>E-mail</h5>
+                        {{ form_row(form.email) }}
+                    </div>
+                </div>
+
+                <div class="register-input mail">
+                    <div class="icon">
+                        <i class="fa fa-location-dot"></i>
+                    </div>
+                    <div class="div-input">
+                        <h5>Adresse</h5>
+                        {{ form_row(form.Adresse) }}
+                    </div>
+                </div>
+
+                <div class="register-input mail">
+                    <div class="icon">
+                        <i class="fa fa-phone"></i>
+                    </div>
+                    <div class="div-input">
+                        <h5>Numéro téléphone</h5>
+                        {{ form_row(form.Tel) }}
+                    </div>
+                </div>
+
+                <div class="register-input mail">
+                    <div class="icon">
+                        <i class="fa fa-id-card"></i>
+                    </div>
+                    <div class="div-input">
+                        <h5>CIN</h5>
+                        {{ form_row(form.Cin) }}
+                    </div>
+                </div>
+<button class="btn btn-outline-success btn-block">Modifier</button>
+                
+            {{ form_end(form) }}
+        </div>
+        <div class="panel right-panel">
+            <div class="panel-content">
+                <h3>Mis à jour du profil de {{ app.user.Nom}}</h3>
+                <a href="{{ path('user_mdp') }}" class="btn btn-singUp">Modifier le mot de passe</a>
+                <button type="button" class="btn btn-outline-secondary btn-block">
+                <a href="{{ path("user")}}" class="text-white">
+                    <i class="fa fa-reply" ></i> Retour
+                </a>
+                </button>
+            </div>
+
+            <img src="{{ asset('assets/images/logo.png') }}" alt="Logo E-Sera"/>
+        </div>
+        
+    </div>
+</section>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('assets/js/main/Register.js') }}"></script>
+{% endblock %}

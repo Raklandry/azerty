@@ -1,0 +1,205 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('assets/css/sheets/userAffiche.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/sheets/venteFlash.css') }}">
+{% endblock %}
+
+
+{% block body %}
+<section class="contacts">
+	<div class="container contacts-container">
+		<aside class="contact-aside">
+			<div class="aside-image">
+			{% for profil in user.profils %}
+ 			{% if profil.photos %}
+				<img src="{{ asset('/uploads/profils/' ~ profil.photos[(profil.photos|length -1)].nom) }}" alt="Image">
+ 			{% else %}
+ 			    <img src="{{ asset('/uploads/profils/default.png') }}" alt="Image">
+ 			{% endif %}
+			{% endfor %}
+			</div>
+        </aside>
+
+            <div class="singIn">
+                
+                <h2 class="title"><i class="fa fa-user text-primary"></i> {{user.nom}}</h2>
+                <div class="identity">
+                <ul class="title">
+                    <li class=""><i class="fa fa-envelope-open-text"></i> {{ user.email }}</li>
+                    <li class=""><i class="fa fa-location-dot text-danger"></i> {{ user.Adresse }}</li>
+                    <li class=""><i class="fa fa-phone text-success"></i> 0{{ user.Tel }}</li>
+                </ul>
+                </div>
+                
+            </div>
+    </div>
+</section>
+
+{# ))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))) #}
+<section class="courses coverflow">
+
+{% if user.produits|length > 0 %}
+
+	<h2 style="text-align: center; font-size: 50px; font-weight: 700; padding: 1rem 0;">Article(s) de {{user.nom}}</h2>
+	<div class="courses-container swiper-wrapper">
+
+{% for produit in user.produits %}
+{% for image in produit.produitImages %}
+
+		<article class="course swiper-slide">
+			<div class="course-image">
+				<img src="{{ asset('/uploads/images/' ~ image.nom) }}" alt="Image">
+			</div>
+			<div class="course-info">
+				<div class="info">
+					<span>{{ produit.nom }}</span>
+					<h5>{{ produit.description }}</h5>
+					<div class="star">
+						<i class="fa fa-splotch"></i>
+						<i class="fa fa-splotch"></i>
+						<i class="fa fa-splotch"></i>
+						<i class="fa fa-splotch"></i>
+						<i class="fa fa-splotch"></i>
+					</div>
+					<h4>{{ produit.prix | number_format(0, ',', ' ') }} Ar</h4>
+				</div>
+				<div class="option">
+				{% if app.user %}
+					<ul class="menu-items">
+						<li>
+							<a href="{{ path('ajout_panier', {'id': produit.id}) }} ">
+								<i class="fa fa-shopping-cart"></i>
+							</a>
+						</li>
+						<li>
+							<a href="">
+								<i class="fa fa-warning text-danger"></i>
+							</a>
+						</li>
+					</ul>
+					{% else %}
+					<ul class="menu-items">
+						<li>
+							<a href="{{ path('app_login') }} ">
+								<i class="fa fa-shopping-cart"></i>
+							</a>
+						</li>
+						<li>
+							<a href="{{ path('app_login') }}">
+								<i class="fa fa-search"></i>
+							</a>
+						</li>
+						<li>
+							<a href="{{ path('app_login') }}">
+								<i class="fa fa-random"></i>
+							</a>
+						</li>
+						<li>
+							<a href="{{ path('app_login') }}">
+								<i class="fa fa-warning"></i>
+							</a>
+						</li>
+					</ul>
+				{% endif %}
+				</div>
+			</div>
+		</article>
+{% endfor %}
+{% endfor %}
+	</div>							
+</section>
+{% else %}
+	<h2 style="text-align: center; font-size: 50px; font-weight: 700; padding: 1rem 0;">Aucun article !</h2>
+{% endif %}
+
+{# ==================================================================================== #}
+<a href="{{ path('admin_index') }}">back to list</a>
+
+<a href="{{ path('admin_edit', {'id': user.id}) }}">edit</a>
+
+{{ include('admin/_delete_form.html.twig') }}
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ user.id }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ user.email }}</td>
+            </tr>
+            {# <tr>
+                <th>Roles</th>
+                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+            </tr> #}
+            <tr>
+                <th>Password</th>
+                <td>{{ user.password }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ user.Nom }}</td>
+            </tr>
+            <tr>
+                <th>Adresse</th>
+                <td>{{ user.Adresse }}</td>
+            </tr>
+            <tr>
+                <th>Tel</th>
+                <td>{{ user.Tel }}</td>
+            </tr>
+            <tr>
+                <th>Cin</th>
+                <td>{{ user.Cin }}</td>
+            </tr>
+        </tbody>
+    </table>
+{% endblock %}
+
+{% block javascripts %}
+<script src="{{ asset('assets/js/main/question.js') }}"></script>
+	<script type="text/javascript">
+ 	var swiper = new Swiper(".mySwiper", {
+ 		slidesPerView: 1,
+ 		spaceBetween: 30,
+ 		pagination: {
+ 			el: ".swiper-pagination",
+ 			clickable: true,
+ 		},
+
+ 		/*responsive*/
+ 		breakpoints: {
+ 			600: {
+ 				slidesPerView: 2,
+ 			},
+ 			1300: {
+ 				slidesPerView: 3,
+ 			}
+ 		}
+ 	});
+
+ 	var coverflow = new Swiper(".coverflow", {
+        effect: "coverflow",
+        grabCursor: true,
+        centeredSlides: true,
+        slidesPerView: "auto",
+        coverflowEffect: {
+          rotate: 50,
+          stretch: 0,
+          depth: 100,
+          modifier: 1,
+          slideShadows: true,
+        },
+        pagination: {
+          el: ".pagination",
+          clickable: true,
+        },
+      });
+
+
+ </script>
+{% endblock %}

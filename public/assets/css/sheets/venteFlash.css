@@ -1,0 +1,154 @@
+/*================= course ===========================*/
+
+.courses{
+	box-shadow: inset 0 0 3rem rgba(0, 0, 0, 0.5);
+}
+.course{
+	background: white;
+	text-align: center;
+	border: 1px solid transparent;
+	overflow: hidden;
+	transition: var(--transition);
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
+	border-radius: 15px;
+}
+.course-image{
+	width: 100%;
+	height: 50%;
+	overflow: hidden;
+	background: white;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	
+}
+.course-image img{
+	width: 100%;
+}
+.course:hover{
+	background: transparent;
+	border-color: white;
+}
+.course-info{
+	width: 100%;
+	height: 50%;
+	padding: 1rem;
+	position: relative;
+}
+/*=========================*/
+.course-info .option{
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	right: 18px;
+	z-index: 4;
+}
+.course-info .option li{
+	border: 1px solid white;
+	border-radius: 50%;
+	width: 40px;
+	height: 40px;
+	text-align: center;
+    margin:  12px 0;
+    opacity: 0;
+    transform: translateX(60px);
+    transition: transform 0.3s ease-out 0s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.course-info .option li button{
+	border: 1px solid white;
+	border-radius: 50%;
+	width: 40px;
+	height: 40px;
+	text-align: center;
+	background: transparent;
+	font-size: 20PX;
+}
+.course:hover .course-info .option li{
+    opacity: 1;
+    transform: translateX(0);
+}
+.course-info .option li i{
+	text-align: center;
+    transition: color 0.1s ease-out 0s;
+	color: #4ACCD1;
+}
+.course-info .option li:nth-child(2) i{
+    color: var(--white);
+}
+.course-info .option li:nth-child(3) i{
+    color: var(--success);
+}
+.course-info .option li:nth-child(4) i{
+    color: var(--danger);
+}
+.course-info .option li:hover{
+    background: rgba(0, 0, 0, 0.5);
+}
+.course:hover .course-info .option li:nth-child(2){
+    transition-delay: 0.1s;
+}
+.course:hover .course-info .option li:nth-child(3){
+    transition-delay: 0.2s;
+}
+.course:hover .course-info .option li:nth-child(4){
+    transition-delay: 0.3s;
+}
+.course:hover .course-info .option li a{
+    color: #ffffff;
+    font-size: 20px;
+    transition: all 0.3s;
+}
+/*==========================*/
+.course-info .info{
+	color: #000;
+	font-size: 20px;
+	text-align: start;
+	width: 85%;
+	height: 100%;
+	display: flex;
+	justify-content: space-around;
+	flex-direction: column;
+}
+
+.course-info .info span{
+	color: #606063;
+}
+.course-info .info h5{
+	font-size: 14px;
+}
+.course-info .info h4{
+	font-size: 20px;
+	font-weight: 700;
+	color: #088178;
+}
+.course:hover .course-info .info h5,
+.course:hover .course-info .info span{
+	color: white;
+}
+.course-info .info i{
+	font-size: 12px;
+	color: rgb(245, 181, 25);
+}
+
+.coverflow {
+	width: 100%;
+	padding-top: 50px;
+}
+.coverflow .swiper-slide {
+	background-position: center;
+	background-size: cover;
+	width: 300px;
+	height: 500px;
+	overflow: hidden;
+}
+
+.coverflow .swiper-slide img {
+	display: block;
+	width: 100%;
+}

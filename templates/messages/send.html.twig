@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello MessagesController!{% endblock %}
+
+
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ asset('assets/css/sheets/Messages.css') }}">
+<style>
+.messagerie{
+    background: transparent;
+    border: 2px solid;
+    color: white !important;
+    box-shadow: none !important;
+}
+.messagerie:focus{
+    background: transparent;
+    border: 2px solid white;
+}
+.btn {
+    margin: 0rem;
+
+}
+.profilPdp{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    position: relative;
+    overflow: hidden;
+}
+.profilPdp img{
+    position: absolute;
+    width: 100%;
+}
+.msg{
+    display: grid;
+    grid-template-columns: 10% 80%;
+}
+</style>
+{% endblock %}
+
+
+{% block body %}
+<section class="message">
+<h1 class="text-center">
+Envoyer un message
+</h1>
+
+<div class="msg">
+<div class="img">
+{% for profil in user.profils %}
+    <div class="profilPdp">
+        <img src="{{ asset('/uploads/profils/' ~ profil.photos[(profil.photos|length -1)].nom) }}" alt="Image">
+    </div>
+{% endfor %}
+</div>
+{{ form(form)}}
+</div>
+{# <a class="Ajout" href="{{ path('envoyer') }}"></a> #}
+</section>
+{% endblock %}

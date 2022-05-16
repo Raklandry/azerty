@@ -1,0 +1,116 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello MessagesController!{% endblock %}
+
+
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ asset('assets/css/sheets/Messages.css') }}">
+<style>
+.profilPdp{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    position: relative;
+    overflow: hidden;
+}
+.profilPdp img{
+    position: absolute;
+    width: 100%;
+}
+.row .profil{
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+.row .profil .message{
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    margin: 0;
+}
+.profil .icon{
+    display: flex;
+    align-items: center;
+}
+.message p{
+   font-size: 20px;
+    margin-top: 0;
+    margin-bottom: 0rem;
+}
+.message .text{
+    font-size: 20px;
+    color: white;
+    border: 1px solid;
+    padding: 8px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+.message p:nth-child(1){
+   font-weight: bold;
+}
+.message p:nth-child(3){
+    color: gray;
+    font-size: 15px;
+}
+.row{
+    padding: 1rem;
+}
+.btn {
+    margin: 0rem;
+
+}
+</style>
+{% endblock %}
+
+
+{% block body %}
+<section class="message">
+{% for message in app.flashes('message') %}
+        
+            <div class="container">
+                <div class="alert alert-success alert-dismissible fade show">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <strong>{{ message }}</strong>
+                </div>
+            </div>
+
+    {% endfor %}
+<h1 class="text-center">
+Messagerie
+</h1>
+<a class="link btn btn-secondary" href="{{ path('messages') }}">
+    <i class="fa fa-reply"></i> Retour
+</a>
+<div class="container-fluid">
+    
+    <div class="row">
+      <div class="col-sm profil">
+        <div class="img">
+        {% if message.sender.profils|length == 0 %}
+                <div class="profilPdp">
+                    <img src="{{ asset('/uploads/profils/default.png') }}" alt="Image" width="100">
+                </div>
+            {% else %}
+                {% for profil in message.sender.profils %}
+                    <div class="profilPdp">
+                        <img src="{{ asset('/uploads/profils/' ~ profil.photos[(profil.photos|length -1)].nom) }}" alt="Image">
+                        <a class="Ajout" href="{{ path('profil_edit', {'id': profil.id}) }}"></a>
+                    </div>
+                {% endfor %}
+                {% endif %}
+        </div>
+
+        <div class="message ">
+            <p>{{message.sender.email}}</p>
+            <p class="text">{{message.message}}</p>
+            <p  class="text-right">{{message.createdAt|date}}</p>
+        </div>
+      </div>
+    </div> 
+</div>
+</section>
+        <div class="container">
+            {{ form(form)}}
+        </div>
+{% endblock %}

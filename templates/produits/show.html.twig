@@ -1,0 +1,123 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Produits{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('assets/css/sheets/detail.css') }}">
+	<style>
+	.articles-detail .profil{
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+	}
+	.profil .profilPdp{
+		width: 100px;
+		height: 100px;
+		position: relative;
+		border-radius: 50%;
+		overflow: hidden;
+	}
+	.profil img{
+		width: 100%;
+	}
+        
+    </style>
+{% endblock %}
+
+{% block body %}
+
+    <section class="articles">
+	<div class="container articles-images">
+		<div thumbsSlider="" class="swiper swiperImg">
+			<div class="swiper-wrapper">
+                {% for image in produit.produitImages %}
+				<div class="swiper-slide">
+		          <img src="{{ asset('/uploads/images/' ~ image.nom) }}" alt="Image">
+		        </div>
+                {% endfor %}
+	        </div>
+		</div>
+
+		<div 
+			style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff"
+	       	class="swiper swiperNav">
+	       	<div class="swiper-wrapper">
+                    {% for image in produit.produitImages %}
+                    <div class="swiper-slide">
+                        <img src="{{ asset('/uploads/images/' ~ image.nom) }}" alt="Image">
+                    </div>
+                    {% endfor %}
+	        </div>
+		</div>
+	</div>
+	<div class="container articles-detail">
+		<div class="type">
+			<h1 class="profil">
+			{% if app.user.profils|length == 0 %}
+				<div class="profilPdp">
+					<img src="{{ asset('/uploads/profils/default.png') }}" alt="Image" width="100">
+				</div>
+			{% else %}
+			{% for profil in produit.user.profils %}
+				<div class="profilPdp">
+					<img src="{{ asset('/uploads/profils/' ~ profil.photos[(profil.photos|length -1)].nom) }}" alt="Image">
+				</div>
+			{% endfor %} {{ produit.user.nom }} 
+			</h1>
+			{% endif %}
+			<h2>{{ produit.Nom }}</h2>
+			<div class="detail">
+				<p>{{ produit.description }}</p>
+				<p class="date">{{ produit.createdAt|date }}</p>
+			</div>
+			<div class="star">
+				<i class="fa fa-splotch active"></i>
+				<i class="fa fa-splotch active"></i>
+				<i class="fa fa-splotch active"></i>
+				<i class="fa fa-splotch"></i>
+				<i class="fa fa-splotch"></i>
+			</div>
+			<h3>{{ produit.prix | number_format(0, ',', ' ') }}Ar</h3>
+			<h2><i class="fa fa-sim-card text-danger"></i> 0{{ produit.user.Tel }}</h2>
+			
+			<div class="option">
+				<a class="btn btn-primary" href="{{ path('ajout_panier', {'id': produit.id}) }} ">
+					<i class="fa fa-shopping-cart"></i> Ajouter au panier
+				</a>
+				<a  class="btn btn-success" href="{{ path('envoyer', {'id': produit.user.id}) }}">
+					<i class="fa fa-commenting"></i> Envoyer un message
+				</a>
+			</div>
+		</div>						
+	</div>						
+</section>
+
+{% endblock %}
+
+{% block javascripts %}
+<script>
+      var swiper = new Swiper(".swiperNav", {
+        spaceBetween: 10,
+        slidesPerView: 4,
+        freeMode: true,
+        watchSlidesProgress: true,
+      });
+      var swiper2 = new Swiper(".swiperImg", {
+        spaceBetween: 10,
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        },
+        thumbs: {
+          swiper: swiper,
+        },
+      });
+
+      var stars = document.querySelectorAll('.star i');
+      	stars.forEach(star => {
+      		star.addEventListener('click', () => {
+      			star.classList.toggle('active');
+      		})
+      	})
+    </script>
+{% endblock %}

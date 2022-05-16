@@ -1,0 +1,322 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profil de {{ app.user.Nom}}{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        
+        .w3-sidebar a{
+            color: var(--bg);
+        }
+        #main{
+            margin-left: 25%;
+        }
+        #mySidebar{
+            width: 25%;
+            display: block;
+        }
+        #mySidebar button{
+            background: var(--bg);
+        }
+        #openNav{
+            display: none;
+        }
+        .w3-teal{
+            display: flex;
+        }
+        /* ====================== */
+
+        .w3-table-all thead tr th{
+            color: var(--bg);
+            font-weight: 700;
+        }
+
+        .w3-table-all tr td{
+            color: var(--bg);
+        }
+        tr .option{
+            display: flex;
+            flex-direction: column;
+        }
+        .imageProduit{
+          display: flex;
+          align-items: center;
+        }
+        .options{
+          position: absolute;
+          left: 0;
+          bottom: 0;
+          width: 100%;
+          height: 70px;
+          display: grid;
+          grid-template-columns: 50% 50%;
+          text-align: center;
+          font-size: 30px;
+          box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+        }
+
+        .options a {
+          width: 100%;
+          height: 100%;
+          border: 1px solid var(--bg);
+        }
+        .options a:nth-child(1):hover {
+            color: white;
+            border-color: white;
+            border-bottom-left-radius: 1rem;
+        }
+        .options a:nth-child(2):hover{
+            color: white;
+            border-color: white;
+            border-bottom-right-radius: 1rem;
+        }
+        .options a:hover i{
+            color: white;
+        }
+        /* ===== */
+
+  .wrapper{
+	width: 300px;
+	height: 300px;
+	position: relative;
+	border: 5px solid #fff;
+	border-radius: 50%;
+	/* background: url("{{ asset('/uploads/profils/2b23894d39c5a2cc84ec51a7dedc8864.png') }}"); */
+	background-size: 100% 100%;
+	overflow: hidden;
+  margin: 2rem;
+}
+
+.wrapper img{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.Ajout{
+	position: absolute;
+	bottom: 0;
+	color: transparent;
+	width: 100%;
+	box-sizing: border-box;
+	padding: 15px 120px;
+	cursor: pointer;
+	transition: 0.5s ease;
+	background: rgba(0, 0, 0, 0.5);
+	opacity: 0;
+}
+
+.wrapper:hover .Ajout{
+	opacity: 1;
+}
+
+.Ajout::before{
+	content: '\f030';
+	font-family: fontAwesome;
+	font-size: 50px;
+	color: #fff;
+	display: inline-block;
+	-webkit-user-select: none;
+}
+.Ajout::after{
+	content: 'Modifier';
+	font-family: 'arial';
+	font-weight: bold;
+	color: #fff;
+	display: block;
+	top: 70px;
+	font-size: 14px;
+}
+    </style>
+<link rel="stylesheet" href="{{ asset('assets/css/sheets/userprofil.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/css/sheets/VenteFlash.css') }}">
+{% endblock %}
+{% block body %}
+<section class="contacts">
+{% for message in app.flashes('message') %}
+        
+            <div class="container pt-5 mt-5">
+                <div class="alert alert-success alert-dismissible fade show">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <strong>{{ message }}</strong>
+                </div>
+            </div>
+
+    {% endfor %}
+	<div class="container contacts-container">
+		<aside class="contact-aside">
+			<div class="">
+			  {% if app.user.profils|length == 0 %}
+        <div class="wrapper">
+            <img src="{{ asset('/uploads/profils/default.png') }}" alt="Image" width="100">
+            <a  class="Ajout" href="{{ path('profil_new') }}"></a>
+        </div>
+        {% else %}
+        {% for profil in app.user.profils %}
+          <div class="wrapper">
+                <img src="{{ asset('/uploads/profils/' ~ profil.photos[(profil.photos|length -1)].nom) }}" alt="Image" width="100">
+                <a class="Ajout" href="{{ path('profil_edit', {'id': profil.id}) }}"></a>
+            </div>
+        {% endfor %}
+        {% endif %}
+			</div>
+      </aside>
+
+            <div class="singIn">
+                
+                <h2 class="title"><i class="fa fa-user text-primary"></i> {{app.user.nom}}</h2>
+                <div class="identity">
+                <ul class="title">
+                    <li class=""><i class="fa fa-envelope-open-text"></i> {{ app.user.email }}</li>
+                    <li class=""><i class="fa fa-location-dot text-danger"></i> {{ app.user.Adresse }}</li>
+                    <li class=""><i class="fa fa-phone text-success"></i> 0{{ app.user.Tel }}</li>
+                </ul>
+                </div>
+                <div class="options">
+                    <a href="{{ path('user_edit') }}"><i class="fa fa-edit text-primary"></i>  Modifier profil</a>
+                    <a href="{{ path('user_mdp') }}"><i class="fa fa-lock text-danger"></i>  Modifier mot de passe</a>
+                </div>
+            </div>
+    </div>
+</section>
+
+{# ))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))) #}
+<section class="courses coverflow">
+<button type="button" class="btn btn-outline-primary btn-block">
+    <a href="{{ path("produits_new")}}" class="text-white h1">
+        <i class="fa fa-hand-holding-medical"></i> Ajouter un produit
+    </a>
+</button>
+{% if app.user.produits|length > 0 %}
+
+	<h2 style="text-align: center; font-size: 50px; font-weight: 700; padding: 1rem 0;">Articles de {{app.user.nom}}</h2>
+	<div class="courses-container swiper-wrapper">
+
+{% for produit in app.user.produits %}
+{% for image in produit.produitImages %}
+
+		<article class="course swiper-slide">
+			<div class="course-image">
+				<img src="{{ asset('/uploads/images/' ~ image.nom) }}" alt="Image">
+			</div>
+			<div class="course-info">
+				<div class="info">
+					<span>{{ produit.nom }}</span>
+					<h5>{{ produit.description }}</h5>
+					<div class="star">
+						<i class="fa fa-splotch"></i>
+						<i class="fa fa-splotch"></i>
+						<i class="fa fa-splotch"></i>
+						<i class="fa fa-splotch"></i>
+						<i class="fa fa-splotch"></i>
+					</div>
+					<h4>{{ produit.prix | number_format(0, ',', ' ') }} Ar</h4>
+				</div>
+				<div class="option">
+				{% if app.user %}
+					<ul class="menu-items">
+						<li>
+							<a href="{{ path('produits_edit', {'id': produit.id}) }} ">
+								<i class="fa fa-edit"></i>
+							</a>
+						</li>
+						<li>
+            {{ include('produits/_delete_form.html.twig') }}
+						</li>
+					</ul>
+					{% else %}
+					<ul class="menu-items">
+						<li>
+							<a href="{{ path('app_login') }} ">
+								<i class="fa fa-shopping-cart"></i>
+							</a>
+						</li>
+						<li>
+							<a href="{{ path('app_login') }}">
+								<i class="fa fa-search"></i>
+							</a>
+						</li>
+						<li>
+							<a href="{{ path('app_login') }}">
+								<i class="fa fa-random"></i>
+							</a>
+						</li>
+						<li>
+							<a href="{{ path('app_login') }}">
+								<i class="fa fa-warning"></i>
+							</a>
+						</li>
+					</ul>
+				{% endif %}
+				</div>
+			</div>
+		</article>
+{% endfor %}
+{% endfor %}
+	</div>							
+</section>
+{% else %}
+	<h2 style="text-align: center; font-size: 50px; font-weight: 700; padding: 1rem 0;">Aucun article !</h2>
+{% endif %}
+
+{% endblock %}
+
+{% block javascripts %}
+<script src="{{ asset('assets/js/main/question.js') }}"></script>
+<script>
+function w3_open() {
+  document.getElementById("main").style.marginLeft = "25%";
+  document.getElementById("mySidebar").style.width = "25%";
+  document.getElementById("mySidebar").style.display = "block";
+  document.getElementById("openNav").style.display = 'none';
+}
+function w3_close() {
+  document.getElementById("main").style.marginLeft = "0%";
+  document.getElementById("mySidebar").style.display = "none";
+  document.getElementById("openNav").style.display = "inline-block";
+}
+</script>
+	<script type="text/javascript">
+ 	var swiper = new Swiper(".mySwiper", {
+ 		slidesPerView: 1,
+ 		spaceBetween: 30,
+ 		pagination: {
+ 			el: ".swiper-pagination",
+ 			clickable: true,
+ 		},
+
+ 		/*responsive*/
+ 		breakpoints: {
+ 			600: {
+ 				slidesPerView: 2,
+ 			},
+ 			1300: {
+ 				slidesPerView: 3,
+ 			}
+ 		}
+ 	});
+
+ 	var coverflow = new Swiper(".coverflow", {
+        effect: "coverflow",
+        grabCursor: true,
+        centeredSlides: true,
+        slidesPerView: "auto",
+        coverflowEffect: {
+          rotate: 50,
+          stretch: 0,
+          depth: 100,
+          modifier: 1,
+          slideShadows: true,
+        },
+        pagination: {
+          el: ".pagination",
+          clickable: true,
+        },
+      });
+
+
+ </script>
+{% endblock %}

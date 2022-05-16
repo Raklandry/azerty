@@ -1,0 +1,411 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}E-Sera{% endblock %}
+
+
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('assets/css/Sheets/Header.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/sheets/condition.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/sheets/venteFlash.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/sheets/question.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/sheets/promotion.css') }}">
+	<style>
+        .imageProduit{
+            display: flex;
+            flex-direction: column;
+        }
+        .imageProduit img{
+            width: 100px;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+
+ <!-- header -->
+
+ <header>
+ {% if app.user %}
+ 	<div class="container header-container">
+ 		<div class="header-left">
+ 			<h1>E-Sera</h1>
+ 			<p>Conçoit des technologies et de services qui permettent à chacun et à chacune d'entre en contact, de former des communautés et de développer les activités de vente.</p>
+ 			<a href="{{ path('user') }}" class="btn btn-primary">Vos informations</a>
+ 		</div>
+ 		<div class="header-right">
+ 			<div class="header-right-image">
+ 				<img src="{{ asset('assets/images/logo.png') }}" alt="Logo E-Sera"/>
+ 			</div>
+ 		</div>
+ 	</div>
+{% else %}
+	<div class="container header-container">
+ 		<div class="header-left">
+ 			<h1>Pas encore inscrit ?</h1>
+ 			<p>Vous souhaitez vendre en ligne mais ne savez pas par où commencer ni même comment.</p>
+ 			<p>Nous vous donnons tous les conseils, les étapes et les astuces pour créer votre boutique en ligne</p>
+ 			<a href="{{ path('app_register') }}" class="btn btn-primary">S'inscrire<i class="fa fa-cart-plus add"></i></a>
+			
+ 		</div>
+ 		<div class="header-right">
+ 			<div class="header-right-image">
+ 				<img src="{{ asset('assets/images/logo.png') }}" alt="Logo E-Sera"/>
+ 			</div>
+ 		</div>
+ 	</div>
+{% endif %}
+ </header>
+
+
+<!-- section condition -->
+
+ <section class="categories" id="categories">
+ 	<div class="container categories-container">
+ 		<div class="categories-left">
+ 			<h1>Conditions de service</h1>
+ 			<p>
+ 				E-Sera conçoit des technologies et des services qui permettent à chacun et à chacune d'entrer en contact, de former des communautés et de développer les activité de leur etreprise.
+ 			</p>
+ 			<a href="#" class="btn btn-primary">Lire la suite</a>
+ 		</div>
+
+ 		<div class="categories-right">
+ 			<article class="category">
+ 				<span class="category-icon">
+ 					<i class="fa fa-bag-shopping"></i>
+ 				</span>
+ 				<h5>Marketplace</h5>
+ 				<p>service d’intermédiation commercial règlementé par un champ juridique</p>
+ 			</article>
+
+ 			<article class="category">
+ 				<span class="category-icon">
+ 					<i class="fa fa-comment-dots"></i>
+ 				</span>
+ 				<h5>Système de message</h5>
+ 				<p>Le modèle e-sera est basé sur la vente directe entre le vendeur</p>
+ 			</article>
+
+ 			<article class="category">
+ 				<span class="category-icon">
+ 					<i class="fa fa-chart-column"></i>
+ 				</span>
+ 				<h5>Outils de statistiques</h5>
+ 				<p>fugit, velit, nostrum voluptatem itaque est quae</p>
+ 			</article>
+
+ 			<article class="category">
+ 				<span class="category-icon">
+ 					<i class="fa fa-truck-fast"></i>
+ 				</span>
+ 				<h5>Module de livraison</h5>
+ 				<p>le but est d'améliorer le temps entre la commande du client sur le plate-forme</p>
+ 			</article>
+
+ 			<article class="category">
+ 				<span class="category-icon">
+ 					<i class="fa fa-clock-rotate-left"></i>
+ 				</span>
+ 				<h5>Vendre 24h/24</h5>
+ 				<p>Prendre davantage le temps de s’informer sur les marques et les articles </p>
+ 			</article>
+
+ 			<article class="category">
+ 				<span class="category-icon">
+ 					<i class="fa fa-shield"></i>
+ 				</span>
+ 				<h5>Sécurité</h5>
+ 				<p>Signalement d'utilisateurs, solutions de détéction pour assurer de façon proactive </p>
+ 			</article>
+ 		</div>
+ 	</div>
+ </section>
+
+
+<!-- =================== section Vente Flash ========================= -->
+
+<section class="courses coverflow">
+	<h2>VENTES FLASH</h2>
+	<div class="courses-container swiper-wrapper">
+{% for produit in produits %}
+{% for image in produit.produitImages %}
+
+		<article class="course swiper-slide">
+			<div class="course-image">
+				<a href="{% if app.user %}{{ path('produits_show', {'id': produit.id}) }}{% else %}{{ path('app_login') }}{% endif %}">
+					<img src="{{ asset('/uploads/images/' ~ image.nom) }}" alt="Image">
+				</a>
+			</div>
+			<div class="course-info">
+				<div class="info">
+					<span>{{ produit.nom }}</span>
+					<h5>{{ produit.description }}</h5>
+					<div class="star">
+						<i class="fa fa-splotch"></i>
+						<i class="fa fa-splotch"></i>
+						<i class="fa fa-splotch"></i>
+						<i class="fa fa-splotch"></i>
+						<i class="fa fa-splotch"></i>
+					</div>
+					<h4>{{ produit.prix | number_format(0, ',', ' ') }} Ar</h4>
+				</div>
+				<div class="option">
+				{% if app.user %}
+					<ul class="menu-items">
+						<li>
+							<a href="{{ path('ajout_panier', {'id': produit.id}) }} ">
+								<i class="fa fa-shopping-cart"></i>
+							</a>
+						</li>
+						<li>
+							<a href="{{ path('produits_show', {'id': produit.id}) }}">
+								<i class="fa fa-search"></i>
+							</a>
+						</li>
+						<li>
+							<a href="courses.html">
+								<i class="fa fa-random"></i>
+							</a>
+						</li>
+						<li>
+							<a href="">
+								<i class="fa fa-warning"></i>
+							</a>
+						</li>
+					</ul>
+					{% else %}
+					<ul class="menu-items">
+						<li>
+							<a href="{{ path('app_login') }} ">
+								<i class="fa fa-shopping-cart"></i>
+							</a>
+						</li>
+						<li>
+							<a href="{{ path('app_login') }}">
+								<i class="fa fa-search"></i>
+							</a>
+						</li>
+						<li>
+							<a href="{{ path('app_login') }}">
+								<i class="fa fa-random"></i>
+							</a>
+						</li>
+						<li>
+							<a href="{{ path('app_login') }}">
+								<i class="fa fa-warning"></i>
+							</a>
+						</li>
+					</ul>
+				{% endif %}
+				</div>
+			</div>
+		</article>
+{% endfor %}
+{% endfor %}
+	</div>								
+</section>
+{# ================= les questions ======================= #}
+<section class="faqs">
+	<h2>Les questions</h2>
+	<div class="container faqs-container">
+		<article class="faq">
+			<div class="faq-icon">
+				<i class="fa fa-circle-plus"></i>
+			</div>
+			<div class="question-answer">
+				<h4>E-Sera : qu’est-ce que c’est ?</h4>
+				<p>
+					C'est une plateforme de connexion entre plusieurs acheteurs et plusieurs vendeurs. Trois acteurs sont donc impliqués dans le processus d’achat, le vendeur et l’acheteur. Comparable à la version en ligne d’un centre commercial, elle s’adresse à une multitude de vendeurs qui peuvent profiter des services fournis par la plateforme et toucher ainsi un maximum d’acheteurs. Le client est donc le vendeur, celui qui présente ses produits et services sur la plateforme.
+				</p>
+			</div>
+		</article>
+
+		<article class="faq">
+			<div class="faq-icon">
+				<i class="fa fa-circle-plus"></i>
+			</div>
+			<div class="question-answer">
+				<h4>Comment fonctionne E-Sera ?</h4>
+				<p>
+					Trois acteurs interviennent dans le fonctionnement de E-Sera : l’administrateur, le vendeur et l’acheteur. Ils forment un trio où chacun joue, tour à tour, le premier rôle. En communication directe les uns avec les autres, leur coordination permet le bon fonctionnement de la plateforme.
+				</p>
+			</div>
+		</article>
+
+		<article class="faq">
+			<div class="faq-icon">
+				<i class="fa fa-circle-plus"></i>
+			</div>
+			<div class="question-answer">
+				<h4>Quoi vendre sur E-Sera ?</h4>
+				<p>
+					Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fuga, magni cum aspernatur quo dignissimos iusto vitae atque ipsum culpa fugiat vero voluptas, distinctio quam dolorum nemo asperiores vel omnis pariatur.
+				</p>
+			</div>
+		</article>
+
+		<article class="faq">
+			<div class="faq-icon">
+				<i class="fa fa-circle-plus"></i>
+			</div>
+			<div class="question-answer">
+				<h4>Quels sont les points faibles du projet ?</h4>
+				<p>
+					Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fuga, magni cum aspernatur quo dignissimos iusto vitae atque ipsum culpa fugiat vero voluptas, distinctio quam dolorum nemo asperiores vel omnis pariatur.
+				</p>
+			</div>
+		</article>
+	</div>
+</section>
+
+{# promo #}
+<section class="promotion">
+	<div style="--swiper-navigation-color: #fff; --swiper-pagination-color: red" class="swiper SwiperPromo">
+      <div class="swiper-wrapper">
+	  {% for produit in promo %}
+		{% for image in produit.produitImages %}
+		<div class="promotion-container swiper-slide">
+ 			<div class="promotion-left">
+				<h1>PROMOTION</h1>
+				<h2>{{ produit.nom }}</h2>
+				<h3>{{ produit.description }}</h3>
+				<h4>{{ produit.prix | number_format(0, ',', ' ') }} Ar</h4>
+				
+				{% if app.user %}
+					<ul class="menu-items">
+						<li>
+							<a href="{{ path('ajout_panier', {'id': produit.id}) }} ">
+								<i class="fa fa-shopping-cart"></i>
+							</a>
+						</li>
+						<li>
+							<a href="{{ path('produits_show', {'id': produit.id}) }}">
+								<i class="fa fa-search"></i>
+							</a>
+						</li>
+						<li>
+							<a href="courses.html">
+								<i class="fa fa-random"></i>
+							</a>
+						</li>
+						<li>
+							<a href="">
+								<i class="fa fa-warning"></i>
+							</a>
+						</li>
+					</ul>
+					{% else %}
+					<ul class="menu-items">
+						<li>
+							<a href="{{ path('app_login') }} ">
+								<i class="fa fa-shopping-cart"></i>
+							</a>
+						</li>
+						<li>
+							<a href="{{ path('app_login') }}">
+								<i class="fa fa-search"></i>
+							</a>
+						</li>
+						<li>
+							<a href="{{ path('app_login') }}">
+								<i class="fa fa-random"></i>
+							</a>
+						</li>
+						<li>
+							<a href="{{ path('app_login') }}">
+								<i class="fa fa-warning"></i>
+							</a>
+						</li>
+					</ul>
+				{% endif %}
+ 			</div>
+			<div class="promotion-right">
+				<a href="{% if app.user %}{{ path('produits_show', {'id': produit.id}) }}{% else %}{{ path('app_login') }}{% endif %}">
+					<img src="{{ asset('/uploads/images/' ~ image.nom) }}" alt="Image">
+				</a>
+			</div>
+		</div>
+		{% endfor %}
+		{% endfor %}
+      </div>
+      <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div>
+    </div>
+    <div thumbsSlider="" class="swiper SwiperPromoLink">
+      <div class="swiper-wrapper">
+	  {% for produit in promo %}
+		{% for image in produit.produitImages %}
+        <div class="swiper-slide">
+			<img src="{{ asset('/uploads/images/' ~ image.nom) }}" alt="Image">
+        </div>
+		{% endfor %}
+		{% endfor %}
+
+      </div>
+    </div>							
+</section>
+<!-- footer -->
+
+
+{% endblock %}
+
+{% block javascripts %}
+<script src="{{ asset('assets/js/main/question.js') }}"></script>
+	<script type="text/javascript">
+ 	var swiper = new Swiper(".mySwiper", {
+ 		slidesPerView: 1,
+ 		spaceBetween: 30,
+ 		pagination: {
+ 			el: ".swiper-pagination",
+ 			clickable: true,
+ 		},
+
+ 		/*responsive*/
+ 		breakpoints: {
+ 			600: {
+ 				slidesPerView: 2,
+ 			},
+ 			1300: {
+ 				slidesPerView: 3,
+ 			}
+ 		}
+ 	});
+
+ 	var coverflow = new Swiper(".coverflow", {
+        effect: "coverflow",
+        grabCursor: true,
+        centeredSlides: true,
+        slidesPerView: "auto",
+        coverflowEffect: {
+          rotate: 50,
+          stretch: 0,
+          depth: 100,
+          modifier: 1,
+          slideShadows: true,
+        },
+        pagination: {
+          el: ".pagination",
+          clickable: true,
+        },
+      });
+
+	  var swiper = new Swiper(".SwiperPromoLink", {
+        spaceBetween: 10,
+        slidesPerView: 4,
+        freeMode: true,
+        watchSlidesProgress: true,
+      });
+      var swiper2 = new Swiper(".SwiperPromo", {
+        spaceBetween: 10,
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        },
+        thumbs: {
+          swiper: swiper,
+        },
+      });
+
+ </script>
+{% endblock %}
